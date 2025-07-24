@@ -1,0 +1,32 @@
+Trabalho para a A1
+
+Prezados(as) alunos(as),
+O trabalho abaixo deverá ser enviado até o dia 13/08/2025, terá valor 5,0 e pode ser feito em grupo de até 4 integrantes.
+Os arquivos do trabalho deverão ser encaminhados para brenoter@gmail.com
+A implementação da solução terá valor 5,0.
+Cada integrante do grupo deverá apresentar uma parte da implementação do trabalho no dia 14/08/2025. Esta apresentação terá valor 5,0.
+
+O trabalho consiste na realização das atividades abaixo:
+1) Especifique a gramática para uma linguagem fictícia, utilizando a notação BNF ou BNF estendida. A linguagem deve possuir:
+a) Tipos de dados: inteiro, real, caracter, string.
+b) Declaração de variáveis.
+c) Atribuição de variáveis.
+d) Expressões aritméticas.
+e) Expressões lógicas.
+f) Identificador de início e fim de bloco de comandos.
+g) Comandos: printf, scanf, if else, for, while.
+
+2) Utilize o JFLEX para criar um analisador léxico para a linguagem.
+
+3) Utilize o CUP para criar um analisador sintático para a linguagem.
+
+4) Execute os analisadores em alguns arquivos com códigos-fontes da linguagem.
+Prepare 03 códigos-fontes "corretos" e 03 códigos-fontes que contenham "erros de sintaxe".
+Devem ser exibidas mensagens específicas para alguns erros de sintaxe, com o número da linha onde foi detectado o erro no arquivo do código-fonte.
+
+Peço que observem a data limite para envio dos arquivos abaixo deste trabalho:
+a) Especificação da gramática da linguagem fictícia, utilizando a notação BNF ou BNF estendida.
+b) Arquivo da especificação JFLEX.
+c) Arquivo da especificação CUP.
+d) 03 códigos-fontes "corretos".
+e) 03 códigos-fontes que contenham "erros de sintaxe".
