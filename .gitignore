@@ -1,4 +1,3 @@
 *.class
-*.jflex
 *.java~
 scanner.java
