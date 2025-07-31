@@ -4,9 +4,8 @@
 9/3;
 8%2;
 
-int i;
+tni 1;
 i=5;
-int a;
-print(a);
-scan (a);
+ftnirp)a(;
+fnacs)a(;
 
