@@ -30,7 +30,7 @@ classes da biblioteca sem ter que especificar cada uma delas separadamente.*/
 //%{ ... %} contém código Java que será incluído diretamente no código gerado pelo JFlex
 
 %eof{ 
-  System.out.println("oãN, êcov oãn átse odabêb!!!"); 
+  System.out.println("Não, você não está bebado!!!"); 
 %eof}
 
 identifier = [:jletter:] ([:jletter:]|[:jletterdigit:])*
@@ -73,8 +73,8 @@ orietni = [0-9][0-9]*
     ">" {return symbol(sym.MENOR_QUE);}
 
     //simbolos
-    "AHCEF" { return symbol(sym.ABRE_BLOCO); }
-    "ERBA" { return symbol(sym.FECHA_BLOCO); }
+    "}" { return symbol(sym.ABRE_BLOCO); }
+    "{" { return symbol(sym.FECHA_BLOCO); }
     ")" { return symbol(sym.ABRE_PARENTESES); }
     "(" { return symbol(sym.FECHA_PARENTESES); }
     "]" {return symbol(sym.ABRE_COLCHETE);}

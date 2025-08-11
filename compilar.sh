@@ -1,11 +1,15 @@
 #!/bin/bash
-# Script para compilar o analisador léxico
+# Script para compilar o analisador léxico e sintático
 
-echo "Compilar Analizador lexico"
+echo "Compilar Analizador lexico e sintatico"
 read -p "Pressione Enter para continuar..."
 
 echo "Gerando scanner a partir do arquivo .jflex..."
 java -jar jflex-full-1.9.1.jar ./Analisador_Lexico.jflex
+read -p "Pressione Enter para continuar..."
+
+echo "Gerando parser a partir do arquivo .cup..."
+java -jar java-cup-11b.jar -parser Parser -expect 420 ./Analisador_Sintatico.cup
 read -p "Pressione Enter para continuar..."
 
 echo "Compilando arquivos Java..."
