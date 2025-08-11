@@ -1,0 +1,203 @@
+//CUP (Constructor of Useful Parsers)
+
+import java_cup.runtime.*;
+/*Essa biblioteca fornece classes e estruturas de dados que são necessárias 
+para o funcionamento do analisador gerado. Importar todas as classes usando 
+import java_cup.runtime.*; simplifica o código, pois permite que você use as 
+classes da biblioteca sem ter que especificar cada uma delas separadamente.*/
+
+parser code {:
+    public void syntax_error(java_cup.runtime.Symbol currToken) {
+        System.out.println("Funcionou!: " 
+        + "Linha: " + (currToken.left) + " Coluna: " + (currToken.right));
+    }
+:}
+/*Descreve as regras de produção para uma linguagem de programação fictícia. 
+Cada regra define como expressões, instruções e comandos devem ser estruturados. 
+Durante a análise sintática (parser), o código adicional fornece um tratamento 
+de erro simples para imprimir mensagens úteis quando ocorrem erros sintáticos.*/
+
+/*Terminais*/
+terminal            VIRGULA, FECHA_COMANDO, ABRE_COLCHETE, FECHA_COLCHETE, ABRE_PARENTESES, FECHA_PARENTESES, ABRE_BLOCO, FECHA_BLOCO;
+terminal            MAIS, MENOS, MULTIPLICACAO, DIVISAO, MAIOR_QUE, MENOR_QUE, RESTO;
+terminal            ATRIBUICAO, EQUIVALENCIA, DIFERENTE, E, OU, OU_EXCLUSIVO, NEGACAO;
+terminal            MENOR_IGUAL, MAIOR_IGUAL; // novos tokens relacionais compostos
+terminal            INTEIRO_RESERVADO, BOOLEANO_RESERVADO, CARACTER_RESERVADO, DECIMAL_RESERVADO;
+terminal            SE, SE_NAO, ENQUANTO, PARA, ESCREVA, GUARDA;
+terminal            DECIMAL ,BOOLEANO , INTEIRO, CARACTER, STRING;//string é apenas usado no print
+terminal            IDENTIFICADOR;
+terminal            CONTINUAR, PARAR, RETORNAR;
+
+/*Não terminals*/
+non terminal           unidade_de_compilacao;
+non terminal           especificador_tipo;
+non terminal           declaracao, expressao, expressao_atribuicao;
+non terminal           operador_atribuicao, constante;
+non terminal           expressao_condicional, expressao_primaria;
+non terminal           expressao_ou, expressao_e, expressao_ou_exclusivo,expressao_equalidade,expressao_relacional;
+non terminal           expressao_aditiva,expressao_multiplicativa;
+non terminal           instrucao, bloco_instrucao, instrucao_se, instrucao_iterativa, instrucao_pulo, instrucao_composta;
+non terminal           comando, comando_escreva, comando_guarda;
+
+/*Precedências*/
+precedence left OU_EXCLUSIVO;
+precedence left E, MAIS, MENOS;
+precedence left OU, MULTIPLICACAO, DIVISAO;
+precedence nonassoc NEGACAO, MENOR_QUE, MAIOR_QUE, EQUIVALENCIA, DIFERENTE, MENOR_IGUAL, MAIOR_IGUAL;
+precedence right ATRIBUICAO; // atribuicao é normalmente associativa à direita
+/*As declarações de precedência em um arquivo .cup são usadas para resolver ambiguidades 
+na gramática e indicar a ordem de avaliação dos operadores em expressões.*/
+
+/*precedence left: Indica que os operadores listados à direita têm uma precedência 
+menor do que os operadores à sua esquerda.*/
+
+/*precedence nonassoc: Indica que os operadores listados não são associativos entre si, Ou seja, 
+expressões ambíguas resultarão em um erro de redução.*/
+
+/*Regras*/
+unidade_de_compilacao ::= declaracao unidade_de_compilacao
+                        | instrucao unidade_de_compilacao
+                        | instrucao_composta unidade_de_compilacao
+                        |
+                        ;
+
+especificador_tipo ::= INTEIRO_RESERVADO
+                       | DECIMAL_RESERVADO
+                       | CARACTER_RESERVADO
+                       | BOOLEANO_RESERVADO
+                       ;
+
+declaracao ::= FECHA_COMANDO IDENTIFICADOR especificador_tipo 
+                {: System.out.println("Variavel declarada\n"); :}
+    	       |  FECHA_COMANDO ABRE_COLCHETE INTEIRO FECHA_COLCHETE IDENTIFICADOR especificador_tipo
+                {: System.out.println("Variavel declarada\n"); :}
+                ;
+
+expressao ::= expressao_atribuicao 
+		      | expressao VIRGULA expressao_atribuicao 
+              ;
+
+expressao_atribuicao ::= FECHA_COMANDO expressao_condicional
+                         | expressao_condicional 
+                         | expressao_atribuicao operador_atribuicao IDENTIFICADOR
+                         {: System.out.println("Atribuicao feita a um identificador\n "); :}
+                         ;
+
+operador_atribuicao ::= ATRIBUICAO
+                      ;
+
+constante ::=   CARACTER 
+              | INTEIRO 
+              | DECIMAL 
+              | BOOLEANO
+              ;
+
+/*Operações Lógicas*/               
+expressao_condicional ::= expressao_ou ;
+
+expressao_ou ::= expressao_e
+				 | expressao_ou OU expressao_e 
+                 {: System.out.println("Expressao logica OU encontrada \n "); :}
+                 ;
+
+expressao_e ::= expressao_ou_exclusivo
+			      | expressao_e E expressao_ou_exclusivo 
+                  {: System.out.println("Expressao logica E encontrada \n "); :}
+                  ;
+
+expressao_ou_exclusivo ::= expressao_equalidade
+				  | expressao_ou_exclusivo OU_EXCLUSIVO expressao_equalidade 
+                  {: System.out.println("Expressao logica OU_EXCLUSIVO encontrada \n "); :}
+                  ;
+
+expressao_equalidade ::= expressao_relacional
+                         | expressao_equalidade EQUIVALENCIA expressao_relacional  
+                         {: System.out.println("Expressao relacional '==' encontrada \n "); :}
+                         | expressao_equalidade DIFERENTE expressao_relacional 
+                         {: System.out.println("Expressao relacional '!=' encontrada \n "); :}
+                         ;
+
+expressao_relacional ::= expressao_aditiva
+                         | expressao_relacional MENOR_QUE expressao_aditiva 
+                         {: System.out.println("Expressao relacional '<' encontrada \n "); :}
+                         | expressao_relacional MAIOR_QUE expressao_aditiva 
+                         {: System.out.println("Expressao relacional '>' encontrada \n "); :}
+                         | expressao_relacional MENOR_IGUAL  expressao_aditiva 
+                         {: System.out.println("Expressao relacional '<=' encontrada \n "); :}
+                         | expressao_relacional MAIOR_IGUAL  expressao_aditiva 
+                         {: System.out.println("Expressao relacional '>=' encontrada \n "); :}
+                         ;
+
+/*Operações Aritméticas*/
+expressao_aditiva ::= expressao_multiplicativa
+                      | expressao_aditiva MAIS expressao_multiplicativa 
+                      {: System.out.println("Expressao aritmetica de ADICAO encontrada \n "); :}
+                      | expressao_aditiva MENOS expressao_multiplicativa 
+                      {: System.out.println("Expressao aritmetica de SUBTRACAO encontrada \n "); :}
+                      ;
+
+expressao_multiplicativa ::= expressao_primaria
+                             | expressao_multiplicativa MULTIPLICACAO expressao_primaria 
+                             {: System.out.println("Expressao aritmetica de MULTIPLICACAO encontrada \n "); :}
+                             | expressao_multiplicativa DIVISAO expressao_primaria 
+                             {: System.out.println("Expressao aritmetica de  DIVISAO encontrada \n "); :}
+                             | expressao_multiplicativa RESTO expressao_primaria 
+                             {: System.out.println("Expressao aritmetica de RESTO encontrada \n "); :}
+                             ;
+
+expressao_primaria ::= IDENTIFICADOR
+                       | constante
+                       ;
+
+/*Instruções e Comandos*/
+instrucao_composta ::= ABRE_BLOCO bloco_instrucao FECHA_BLOCO
+                     ;
+
+bloco_instrucao ::= /*empty*/
+                  | declaracao bloco_instrucao
+                  | instrucao bloco_instrucao
+                  ;
+
+instrucao ::= expressao
+              | instrucao_se
+              | instrucao_iterativa
+              | instrucao_pulo
+		      | comando
+              ;
+
+instrucao_se ::= ABRE_PARENTESES expressao_condicional FECHA_PARENTESES SE instrucao_composta 
+{: System.out.println("Fim da Instrucao SE\n "); :}
+               | ABRE_PARENTESES expressao_condicional FECHA_PARENTESES SE instrucao_composta SE_NAO instrucao_composta 
+               {: System.out.println("Fim da Instrucao SE SE_NAO\n "); :}
+               ;
+
+/*Instruções Iterativas*/
+instrucao_iterativa ::= ABRE_PARENTESES expressao_condicional FECHA_PARENTESES ENQUANTO instrucao_composta 
+                    {: System.out.println("Fim do Comando ENQUANTO\n "); :}
+                    | ABRE_PARENTESES expressao_atribuicao FECHA_COMANDO expressao_condicional FECHA_COMANDO expressao FECHA_PARENTESES PARA instrucao_composta 
+                    {: System.out.println("Fim do Comando PARA\n "); :}
+                    | ABRE_PARENTESES expressao_atribuicao FECHA_COMANDO expressao_condicional FECHA_COMANDO FECHA_PARENTESES PARA instrucao_composta 
+                    {: System.out.println("Fim do Comando PARA\n "); :}
+                    | ABRE_PARENTESES expressao_atribuicao FECHA_COMANDO FECHA_COMANDO expressao FECHA_PARENTESES PARA instrucao_composta 
+                    {: System.out.println("Fim do Comando PARA\n "); :}
+                    | ABRE_PARENTESES expressao_atribuicao FECHA_COMANDO FECHA_COMANDO FECHA_PARENTESES PARA instrucao_composta 
+                    {: System.out.println("Fim do Comando PARA \n "); :}
+                    ;
+
+/*Instruções de Pulo*/                      
+instrucao_pulo ::=   FECHA_COMANDO CONTINUAR
+                   | FECHA_COMANDO PARAR
+                   | FECHA_COMANDO expressao RETORNAR
+                   ;
+
+/*Comandos*/
+comando ::= comando_escreva | comando_guarda ;
+
+comando_escreva ::= FECHA_COMANDO ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES ESCREVA
+{: System.out.println("Comando ESCREVA encontrado\n "); :}
+			      | FECHA_COMANDO ABRE_PARENTESES STRING FECHA_PARENTESES ESCREVA
+                  {: System.out.println("Comando ESCREVA encontrado\n "); :}
+                  ;
+
+comando_guarda ::= FECHA_COMANDO ABRE_PARENTESES IDENTIFICADOR FECHA_PARENTESES GUARDA 
+{: System.out.println("Comando GUARDA encontrado\n "); :};

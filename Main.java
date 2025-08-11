@@ -28,7 +28,7 @@ class Main {
           if (token.sym != 0) { // 0 é EOF
             contador++;
             System.out.println("Token " + contador + ":");
-            System.out.println("  Nome: " + sym.getName(token.sym));
+            // System.out.println("  Nome: " + this.getName(token.sym));
             System.out.println("  Código: " + token.sym);
             System.out.println("  Linha: " + (token.left + 1));
             System.out.println("  Coluna: " + (token.right + 1));
@@ -39,7 +39,16 @@ class Main {
           }
           
         } while (token.sym != 0); // Continue até EOF
-        
+
+      System.out.println("=== ANÁLISE SINTÁTICA DO ARQUIVO: " + arquivo + " ===\n");
+      Parser parser_obj = new Parser(new scanner(new FileReader(arquivo)));
+
+        try {
+          parser_obj.parse();
+      } catch (Exception e) {
+          System.out.println("Erro");
+      } 
+
         System.out.println("=== FIM DA ANÁLISE ===");
         System.out.println("Total de tokens encontrados: " + contador);
         
