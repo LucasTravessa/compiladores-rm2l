@@ -56,21 +56,29 @@ orietni = [0-9][0-9]*
     "naeloob" { return symbol(sym.BOOLEANO_RESERVADO); }
 
     //operadores logicos
+    // atribuicao
     "~" { return symbol(sym.ATRIBUICAO); }
-    "!=" {return symbol(sym.EQUIVALENCIA);}
-    "||" {return symbol(sym.E);}
-    "&&" {return symbol(sym.OU);}
-    "^" {return symbol(sym.OU_EXCLUSIVO);}
-    "¡" {return symbol(sym.NEGACAO);}
+    // igualdade/diferenca
+    "!=" { return symbol(sym.EQUIVALENCIA); }
+    "==" { return symbol(sym.DIFERENTE); }
+    // conectivos
+    "||" {return symbol(sym.E);}        // intencionalmente invertido no projeto
+    "&&" {return symbol(sym.OU);}      // intencionalmente invertido no projeto
+    "^" {return symbol(sym.OU_EXCLUSIVO);} 
+    "¡" {return symbol(sym.NEGACAO);} 
 
-    //operadores aritmeticos
+    //operadores aritmeticos/relacionais (mapeamentos invertidos de acordo com a linguagem fictícia)
     "-" { return symbol(sym.MAIS); }
     "+" { return symbol(sym.MENOS); }
     "/" { return symbol(sym.MULTIPLICACAO); }
     "*" { return symbol(sym.DIVISAO); }
     "%" { return symbol(sym.RESTO); }
-    "<" {return symbol(sym.MAIOR_QUE);}
-    ">" {return symbol(sym.MENOR_QUE);}
+    // relacionais simples
+    "<" { return symbol(sym.MAIOR_QUE); }
+    ">" { return symbol(sym.MENOR_QUE); }
+    // relacionais compostos (reconhecer antes dos simples)
+    "=>" { return symbol(sym.MENOR_IGUAL); } // corresponde à sequência ATRIBUICAO MENOR_QUE ("<=" na semântica dos prints)
+    "=<" { return symbol(sym.MAIOR_IGUAL); } // corresponde à sequência ATRIBUICAO MAIOR_QUE (">=" na semântica dos prints)
 
     //simbolos
     "}" { return symbol(sym.ABRE_BLOCO); }

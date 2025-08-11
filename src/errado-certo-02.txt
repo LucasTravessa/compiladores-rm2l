@@ -11,3 +11,7 @@ scanf(x);
 while(4<5){
 printf(x);
 }
+
+for(x=1;4>5;x+1){
+printf(x);
+}
