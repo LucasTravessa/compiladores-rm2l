@@ -1,56 +1,34 @@
 Trabalho T1: Compiladores;
-Linguagem de Programação: ;
+Linguagem de Programação: Linguagem Invertida;
 Desenvolvida por: ;
 Curso: Bacharelado em Engenharia De Computação;
 
 ---------------------------------------------------------------------------------------------------
 
 [Notação BNF]
-
-<bloco comandos> ::= <inicio bloco> <comandos> <fim bloco>
-<inicio bloco> ::= {
-<fim bloco> ::= }
-<comandos> ::= <comando if> | <declaracao de variavel> | <atribuicao de
-variavel> | <expressao aritmetica>
-<comando if> ::= if ( <expressao> ) <bloco comandos> | if ( <expressao> ) <bloco
-comandos> else <bloco comandos>
-<declaracao de variavel> ::= <tipo> <identificador> { , <identificador> }
-<atribuicao de variavel> ::= <identificador> = <expressao aritmetica simples> |
-<identificador> = <expressao aritmetica>
-<expressao aritmetica> ::= <expressao aritmetica simples> | <expressao
-aritmetica simples> <operador aritmetico> <expressao aritmetica simples>
-<expressao aritmetica simples> ::= <sinal> <numero>
-<expressao> ::= <expressao simples> | <expressao simples> <operador
-relacional> <expressao simples>
-<expressao simples> ::= <sinal> <identificador>
-<identificador> ::= <letra> | <identificador> <letra> | <identificador> <digito>
-<numero> ::= <digito> | <digito> <numero> | <sinal> <numero> |
-<numero>.<numero>
-<tipo> ::= int | float | char | string
-<letra> ::= a | b | c | ... | z | A | B | C | ... | Z
-<operador relacional> ::= == | <> | < | <= | >= | >
-<operador aritmetico> ::= + | - | * | /
-<digito> ::= 0 | 1 | ... | 9
-<sinal> ::= + | - | <vazio>
-
----------------------------------------------------------------------------------------------------
+/* Estrutura Básica de Blocos */
 <bloco comandos> ::= <inicio bloco> <comandos> <fim bloco>
 <inicio bloco> ::= }
 <fim bloco> ::= {
 <comandos> ::= <comando fi> | <declaracao de variavel> | <atribuicao de variavel> | <expressao aritmetica>
-<comando fi> ::= fi ( <expressao> ) <bloco comandos> | fi ( <expressao> ) <bloco comandos> esle <bloco comandos>
-<declaracao de variavel> ::= <tipo> <identificador> { , <identificador> }
-<atribuicao de variavel> ::= <identificador> = <expressao aritmetica simples> | <identificador> = <expressao aritmetica>
+<comando fi> ::= )<expressao>( fi <bloco comandos> 
+<comando elihw> ::= )<expressao>( elihw <bloco comandos>
+<comando rof> ::= )<expressao> @ <expressao> @ <atribuicao de variavel> ( rof <bloco comandos>
+<comando fnacs> ::= @ )<identificador>(fnacs
+<comando ftnirp> ::= @ )<identificador>(ftnirp | @ )<string>(ftnirp
+<declaracao de variavel> ::= @ <identificador> <tipo>
+<atribuicao de variavel> ::= <expressao aritmetica simples> ~ <identificador>
 <expressao aritmetica> ::= <expressao aritmetica simples> | <expressao aritmetica simples> <operador aritmetico> <expressao aritmetica simples>
 <expressao aritmetica simples> ::= <sinal> <numero>
 <expressao> ::= <expressao simples> | <expressao simples> <operador relacional> <expressao simples>
-<expressao simples> ::= <sinal> <identificador>
+<expressao simples> ::= <sinal> <numero>
 <identificador> ::= <letra> | <identificador> <letra> | <identificador> <digito>
-<numero> ::= <digito> | <digito> <numero> | <sinal> <numero> | <numero>.<numero>
-<tipo> ::= tni | taolf | rahc | gnirts
+<numero> ::= <digito> | <digito> <numero> |  <numero> <sinal> | <numero>.<numero>
+<tipo> ::= tni | taolf | rahc | gnirts | naeloob
+<string> ::= " <letra> | <letra> <string> | <string> <letra> | <string> <digito> | <string>.<string>
 <letra> ::= a | b | c | ... | z | A | B | C | ... | Z
 <operador relacional> ::= == | <> | < | <= | >= | >
-<operador aritmetico> ::= + | - | * | /
+<operador aritmetico> ::= - | + | / | * | %
 <digito> ::= 0 | 1 | ... | 9
 <sinal> ::= + | - | <vazio>
 ---------------------------------------------------------------------------------------------------
