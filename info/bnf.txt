@@ -1,6 +1,6 @@
 Trabalho T1: Compiladores;
 Linguagem de Programação: Linguagem Invertida;
-Desenvolvida por: ;
+Desenvolvida por: Lucas Travessa, Lucas Corrado, Rafael Cruz, Mateus Ramos;
 Curso: Bacharelado em Engenharia De Computação;
 
 ---------------------------------------------------------------------------------------------------
